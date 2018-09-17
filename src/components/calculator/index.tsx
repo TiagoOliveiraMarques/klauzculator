@@ -19,7 +19,19 @@ export class Calculator extends React.Component<ICalculatorProps, ICalculatorSta
         return (
             <div className="calculator">
                 <Display expression="23+45" evaluation="68" lastOperation="1+1=2"/>
-                <Keyboard onButtonClick={noop} />
+                <Keyboard 
+                    onAdd={noop}
+                    onClear={noop}
+                    onDivide={noop}
+                    onDot={noop}
+                    onEqual={noop}
+                    onGrantTotal={noop}
+                    onMultiply={noop}
+                    onNumber={noop}
+                    onRemainder={noop}
+                    onSign={noop}
+                    onSubtract={noop}
+                />
             </div>
         )
     }
