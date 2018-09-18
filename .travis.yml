@@ -8,3 +8,9 @@ script:
   - npm run build
 on:
     branch: master
+deploy:
+  provider: pages
+  skip-cleanup: true
+  keep_history: true
+  on:
+      branch: master
