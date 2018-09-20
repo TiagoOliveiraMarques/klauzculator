@@ -21,8 +21,10 @@ export class Keyboard extends React.PureComponent<IKeyboardProps> {
     private constructor(props: IKeyboardProps) {
         super(props);
 
-        this.numberDelegates = new Array(11)
-            .map((value, index) => () => this.props.onNumber(index));
+        this.numberDelegates = [];
+        for (let i = 0; i < 11; i++) {
+            this.numberDelegates.push(() => this.props.onNumber(i));
+        }
     }
 
     public render() {
