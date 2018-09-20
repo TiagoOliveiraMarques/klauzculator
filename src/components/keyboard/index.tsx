@@ -14,6 +14,7 @@ export interface IKeyboardProps {
     onDot: () => void;
     onEqual: () => void;
 }
+
 export class Keyboard extends React.PureComponent<IKeyboardProps> {
 
     private numberDelegates: Array<() => void>;
@@ -25,6 +26,14 @@ export class Keyboard extends React.PureComponent<IKeyboardProps> {
         for (let i = 0; i < 11; i++) {
             this.numberDelegates.push(() => this.props.onNumber(i));
         }
+    }
+
+    public componentDidMount() {
+        this.registerKeyboardEvents();
+    }
+
+    public componentWillUnmount() {
+        this.unregisterKeyboardEvents();
     }
 
     public render() {
@@ -64,4 +73,35 @@ export class Keyboard extends React.PureComponent<IKeyboardProps> {
             </div>
         )
     }
+
+    private registerKeyboardEvents(): void {
+        document.onkeyup = this.handleKeyboardEvent;
+    }
+
+    private unregisterKeyboardEvents(): void {
+        document.onkeyup = null;
+    }
+
+    private handleKeyboardEvent = (evt: KeyboardEvent): void => {
+        const numberCandidate = parseInt(evt.key, 10);
+        if (Number.isInteger(numberCandidate)) {
+            return this.props.onNumber(numberCandidate);
+        }
+
+        switch (evt.code) {
+            case 'NumpadDecimal':
+                return this.props.onDot();
+            case 'NumpadAdd':
+                return this.props.onAdd();
+            case 'NumpadSubtract':
+                return this.props.onSubtract();
+            case 'NumpadDivide':
+                return this.props.onDivide();
+            case 'NumpadMultiply':
+                return this.props.onMultiply();
+            case 'NumpadEnter':
+                return this.props.onEqual();
+        }
+    }
+
 }
